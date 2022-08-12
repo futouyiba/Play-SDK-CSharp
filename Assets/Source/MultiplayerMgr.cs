@@ -8,18 +8,22 @@ namespace LeanCloud.Play
 {
     public class MultiplayerMgr : MonoBehaviour
     {
-        private const byte GAME_OVER_EVENT = 100;
-        private const string PREFAB_ID = "prefabId";
-        private const string POSTION = "position";
-        private const string SEAT_DATA = "SeatData";
+        public const string PREFAB_ID = "prefabId";
+        public const string SEAT_DATA = "SeatData";
+        public const string POSITION = "position";
+        public const string SEAT_ID = "seatId";
+        public const string CUSHION_ID = "cushionId";
+        public const string ACTOR_ID = "actorId";
 
-        private Client client;
-        private string _roomName = "xiugou";
+        public static MultiplayerMgr Instance { get; private set; }
+        public Client client;
+        public string _roomName = "xiugou";
         
-        Dictionary<int, PlayerCharacter> PlayerCharacters = new Dictionary<int, PlayerCharacter>();
+        public Dictionary<int, PlayerCharacter> PlayerCharacters = new Dictionary<int, PlayerCharacter>();
 
-        private void Start()
+        private async void Start()
         {
+            this.Instance = this;
             LeanCloud.Common.Logger.LogDelegate = (level, log) =>
             {
                 if (level == LeanCloud.Common.LogLevel.Debug)
@@ -92,11 +96,14 @@ namespace LeanCloud.Play
         {
             foreach (var kv in changedProps)
             {
-                Debug.Log($"prop changed {kv.Key} {kv.Value}, of player {player.Id}");
+                Debug.Log($"prop changed {kv.Key} {kv.Value}, of player {player.UserId}");
 
                 switch (kv.Key)
                 {
-                    
+                    case POSITION:
+                        // var pos = Vector3. kv.Value;
+                        // PlayerCharacters[player.ActorId].transform.position = pos;
+                        break;
                 }
             }
             if (player.IsLocal)
@@ -105,6 +112,21 @@ namespace LeanCloud.Play
             }
 
             
+        }
+        
+        public async Task BroadcastEvent(byte eventId, PlayObject eventData)
+        {
+            var options = new SendEventOptions()
+            {
+                ReceiverGroup = ReceiverGroup.All
+            };
+            try {
+                // 发送自定义事件
+                await client.SendEvent(eventId, eventData, options);
+            } catch (PlayException e) {
+                // 发送事件错误
+                Debug.LogErrorFormat("{0}, {1}", e.Code, e.Detail);
+            }
         }
 
         private void OnPlayerRoomJoined(Player newPlayer)
@@ -126,7 +148,7 @@ namespace LeanCloud.Play
                     {
                         props.Add(PREFAB_ID, Random.Range(0, 3));
                     }
-                    props.Add(POSTION, new Vector3(0, 0, 0));
+                    props.Add(POSITION, new Vector3(0, 0, 0));
                 }
             }
         }
