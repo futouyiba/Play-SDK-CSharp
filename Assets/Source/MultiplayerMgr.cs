@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -167,9 +168,11 @@ namespace LeanCloud.Play
                 var playerCharacter = newCharGo.AddComponent<PlayerCharacter>();
                 playerCharacter.cachedActorId = player.ActorId;
                 PlayerCharacters.Add(player.ActorId, playerCharacter);
+                newCharGo.GetComponentInChildren<TextMeshPro>().text = player.UserId;
+                return;
             }
             
-            // basically when 
+            // basically this should not happen.
             if (!PlayerCharacters.ContainsKey(player.ActorId)) return;
             
             if (changedProps.ContainsKey("x") || changedProps.ContainsKey("y") || changedProps.ContainsKey("z"))
