@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Samples/QuickStart.unity
-    guid: 667129941a53148bd87b115545b93196
+    path: Assets/Scenes/WhiteBox.unity
+    guid: 82ea85719d9295d46b2cd0737c661815
   m_configObjects: {}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,6 +9,8 @@ namespace LeanCloud.Play
 {
     public class MultiplayerMgr : MonoBehaviour
     {
+        public GameObject CharacterPrefab;
+        
         public const string PREFAB_ID = "prefabId";
         public const string SEAT_OWNER_DATA = "SeatData";
         public const string POSITION = "position";
@@ -61,6 +64,16 @@ namespace LeanCloud.Play
             client.OnPlayerRoomLeft += OnPlayerRoomLeft;
             client.OnMasterSwitched += OnMasterSwitched;
             client.OnRoomCustomPropertiesChanged += OnRoomCustomPropertiesChanged;
+
+            // init character of my self
+            if (!client.Player.IsMaster)
+            {
+                return;
+            }
+            
+            OnPlayerRoomJoined(client.Player);
+            client.Room.CustomProperties.Add(SEAT_OWNER_DATA, new PlayObject());
+            
         }
 
         private void OnRoomCustomPropertiesChanged(PlayObject obj)
@@ -76,6 +89,8 @@ namespace LeanCloud.Play
                 }
             }
         }
+        
+        
 
         private void OnMasterSwitched(Player obj)
         {
@@ -85,7 +100,11 @@ namespace LeanCloud.Play
         private void OnPlayerRoomLeft(Player player)
         {
             Debug.Log($"player {player.UserId} left room");
-            
+            if (PlayerCharacters.ContainsKey(player.ActorId))
+            {
+                Destroy(PlayerCharacters[player.ActorId].gameObject);
+                PlayerCharacters.Remove(player.ActorId);
+            }
         }
 
         private void OnCustomEvent(byte eventType, PlayObject eventData, int senderId)
@@ -98,14 +117,42 @@ namespace LeanCloud.Play
                         eventData.GetFloat("y"), eventData.GetFloat("z")));
                     break;
                 case EventType.EVENT_APPLY_CUSHION:
+                    if (!client.Player.IsMaster)
+                    {
+                        return;
+                    }
+                    var seatId = eventData.GetInt(SEAT_ID);
                     var cushionId = eventData.GetInt(CUSHION_ID);
-                       
+                    if( client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).TryGetInt(seatId , out  int seatOwnerId))
+                    {
+                        if (seatOwnerId == senderId)
+                        {
+                            // client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).SetInt(seatId, -1);
+                            // client.Room.set
+                        }
+                    }
+                    else
+                    {
+                        client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).Add(seatId, senderId);
+                    }
+
                     break;
-                case EventType.EVENT_APPROVE_CUSHION:
+                case EventType.EVENT_APPROVE_REQUEST_OWNER:
+                    
+                    break;
+                
+                case EventType.EVENT_APPROVE_CUSHION_RESULT:
+                    if (!client.Player.IsMaster)
+                    {
+                        return;
+                    }
                     if (senderId == client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).GetInt(eventData.GetInt(SEAT_ID)))
                     {
-                        PlayerCharacters[eventData.GetInt(APPLIER)].ReceiveGoCushion(eventData.GetInt(CUSHION_ID));
+                        PlayerCharacters[eventData.GetInt(APPLIER)].GoCushionApproved( eventData.GetInt(SEAT_ID), eventData.GetInt(CUSHION_ID));
                     }
+                    break;
+                case EventType.EVENT_CONFIRMED_ENTER_CUSHION:
+                    
                     break;
             }
         }
@@ -113,24 +160,29 @@ namespace LeanCloud.Play
 
         private void OnPlayerCustomPropertiesChanged(Player player, PlayObject changedProps)
         {
-            foreach (var kv in changedProps)
+            if (changedProps.ContainsKey(PREFAB_ID))
             {
-                Debug.Log($"prop changed {kv.Key} {kv.Value}, of player {player.UserId}");
-
-                switch (kv.Key)
-                {
-                    case POSITION:
-                        // var pos = Vector3. kv.Value;
-                        // PlayerCharacters[player.ActorId].transform.position = pos;
-                        break;
-                }
+                var newCharGo = GameObject.Instantiate(CharacterPrefab, new Vector3(player.CustomProperties.GetFloat("x"),
+                    player.CustomProperties.GetFloat("y"), player.CustomProperties.GetFloat("z")), Quaternion.identity);
+                var playerCharacter = newCharGo.AddComponent<PlayerCharacter>();
+                playerCharacter.cachedActorId = player.ActorId;
+                PlayerCharacters.Add(player.ActorId, playerCharacter);
             }
+            
+            // basically when 
+            if (!PlayerCharacters.ContainsKey(player.ActorId)) return;
+            
+            if (changedProps.ContainsKey("x") || changedProps.ContainsKey("y") || changedProps.ContainsKey("z"))
+            {
+                // ReSharper disable once Unity.NoNullPropagation
+                player.PlayerCharacter?.ReceiveMoveTo(new Vector3(player.CustomProperties.GetFloat("x"),
+                    player.CustomProperties.GetFloat("y"), player.CustomProperties.GetFloat("z")));
+            }
+            
             if (player.IsLocal)
             {
                 Debug.Log("above player is local");
             }
-
-            
         }
         
         public async Task BroadcastEvent(byte eventId, PlayObject eventData)
@@ -151,25 +203,23 @@ namespace LeanCloud.Play
         private void OnPlayerRoomJoined(Player newPlayer)
         {
             Debug.Log($"new player: { newPlayer.UserId }");
-            if (client.Player.IsMaster)
-            {
-                var playerList = client.Room.PlayerList;
-                for (int i = 0; i < playerList.Count; i++)
-                {
-                    var player = playerList[i];
-                    var props = new PlayObject();
 
-                    if (player.IsMaster)
-                    {
-                        props.Add(PREFAB_ID, 4);
-                    }
-                    else
-                    {
-                        props.Add(PREFAB_ID, Random.Range(0, 3));
-                    }
-                    props.Add(POSITION, new Vector3(0, 0, 0));
-                }
+            if (!client.Player.IsMaster) return;
+            var props = new PlayObject();
+
+            if (newPlayer.IsMaster)
+            {
+                props.Add(PREFAB_ID, 4);
             }
+            else
+            {
+                props.Add(PREFAB_ID, Random.Range(0, 3));
+            }
+            props.Add("x", Random.Range(-10, 10));
+            props.Add("y", 1);
+            props.Add("z", Random.Range(-10, 10));
+            newPlayer.SetCustomProperties(props);
+            
         }
 
         private async Task OnApplicationQuit()

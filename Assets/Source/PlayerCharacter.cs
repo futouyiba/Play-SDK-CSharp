@@ -14,8 +14,8 @@ namespace LeanCloud.Play
         public int ComputedActorId => MultiplayerMgr.Instance.PlayerCharacters.ContainsValue(this)
             ? MultiplayerMgr.Instance.PlayerCharacters.Single(x => x.Value == this).Key
             : -1;
-        
-        public Player PlayerModel => MultiplayerMgr.Instance.client.Room.GetPlayer()
+
+        public Player PlayerModel => MultiplayerMgr.Instance.client.Room.GetPlayer(ComputedActorId);
         
         public void SendMoveFromClick(Vector3 destination)
         {
@@ -42,10 +42,13 @@ namespace LeanCloud.Play
 
         private void OnTriggerEnter(Collider cushionCollider)
         {
+            if (!PlayerModel.IsLocal) return;
+            
             var cushion = cushionCollider.GetComponent<Cushion>();
             if (cushion == null) return;
             
-            var button = cushionCollider.GetComponent<Button>();
+            
+            var button = cushionCollider.GetComponentInChildren<Button>();
             if (button != null)
             {
                 button.onClick.RemoveAllListeners();
@@ -71,7 +74,7 @@ namespace LeanCloud.Play
             
         }
 
-        public void ReceiveGoCushion(int seatId, int cushionId)
+        public void GoCushionApproved(int seatId, int cushionId)
         {
             
         }

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8fed5ab-f013-4127-8ffd-1ea61b98e995" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Source/Cushion.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Source/Seat.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Source/Seat.cs.meta" afterDir="false" />
+    <list default="true" id="b8fed5ab-f013-4127-8ffd-1ea61b98e995" name="Changes" comment="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic.">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cushion.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cushion.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/Cushion.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/QuickStart.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/QuickStart.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Source/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/Client.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Source/EventDefine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/EventType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Source/EventDefine.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/EventType.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Cushion.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Cushion.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sofa.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sofa.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Source/EventType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/EventType.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Source/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/Player.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LeanCloud.Play.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/LeanCloud.Play.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/sofa.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/sofa.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Play-SDK-CSharp.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Play-SDK-CSharp.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,8 +84,16 @@
       <updated>1657111348291</updated>
       <workItem from="1657111363429" duration="422000" />
       <workItem from="1657111850839" duration="622000" />
-      <workItem from="1660285701250" duration="15168000" />
+      <workItem from="1660285701250" duration="31427000" />
     </task>
+    <task id="LOCAL-00001" summary="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic.">
+      <created>1660360901610</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1660360901610</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,7 +107,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -107,5 +127,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic." />
+    <option name="LAST_COMMIT_MESSAGE" value="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic." />
   </component>
 </project>
