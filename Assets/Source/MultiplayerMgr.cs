@@ -9,11 +9,12 @@ namespace LeanCloud.Play
     public class MultiplayerMgr : MonoBehaviour
     {
         public const string PREFAB_ID = "prefabId";
-        public const string SEAT_DATA = "SeatData";
+        public const string SEAT_OWNER_DATA = "SeatData";
         public const string POSITION = "position";
         public const string SEAT_ID = "seatId";
         public const string CUSHION_ID = "cushionId";
         public const string ACTOR_ID = "actorId";
+        public const string APPLIER = "applier";
 
         public static MultiplayerMgr Instance { get; private set; }
         public Client client;
@@ -23,7 +24,7 @@ namespace LeanCloud.Play
 
         private async void Start()
         {
-            this.Instance = this;
+            MultiplayerMgr.Instance = this;
             LeanCloud.Common.Logger.LogDelegate = (level, log) =>
             {
                 if (level == LeanCloud.Common.LogLevel.Debug)
@@ -69,7 +70,7 @@ namespace LeanCloud.Play
                 Debug.Log("room property changed: " + kvPair.Key + " " + kvPair.Value);
                 switch (kvPair.Key)
                 {
-                    case SEAT_DATA:
+                    case SEAT_OWNER_DATA:
                         
                         break;
                 }
@@ -87,10 +88,28 @@ namespace LeanCloud.Play
             
         }
 
-        private void OnCustomEvent(byte arg1, PlayObject arg2, int arg3)
+        private void OnCustomEvent(byte eventType, PlayObject eventData, int senderId)
         {
-            throw new NotImplementedException();
+            Debug.LogFormat("custom event {0} from {1}", eventType, senderId);
+            switch (eventType)
+            {
+                case EventType.EVENT_APPLY_FOR_MOVE:
+                    PlayerCharacters[senderId].ReceiveMoveTo(new Vector3(eventData.GetFloat("x"),
+                        eventData.GetFloat("y"), eventData.GetFloat("z")));
+                    break;
+                case EventType.EVENT_APPLY_CUSHION:
+                    var cushionId = eventData.GetInt(CUSHION_ID);
+                       
+                    break;
+                case EventType.EVENT_APPROVE_CUSHION:
+                    if (senderId == client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).GetInt(eventData.GetInt(SEAT_ID)))
+                    {
+                        PlayerCharacters[eventData.GetInt(APPLIER)].ReceiveGoCushion(eventData.GetInt(CUSHION_ID));
+                    }
+                    break;
+            }
         }
+
 
         private void OnPlayerCustomPropertiesChanged(Player player, PlayObject changedProps)
         {

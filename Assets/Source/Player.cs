@@ -18,6 +18,8 @@ namespace LeanCloud.Play {
             get; internal set;
 		}
 
+        public PlayerCharacter PlayerCharacter => MultiplayerMgr.Instance.PlayerCharacters[ActorId];
+
         /// <summary>
         /// 房间玩家 ID
         /// </summary>

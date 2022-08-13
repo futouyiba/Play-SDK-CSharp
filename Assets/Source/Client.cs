@@ -60,6 +60,7 @@ namespace LeanCloud.Play {
         public Action<int, string> OnError;
 
         internal LobbyService lobbyService;
+        
 
         public string PlayServer {
             get; private set;

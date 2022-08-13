@@ -60,6 +60,7 @@
      <Compile Include="Assets\Source\Client.cs" />
      <Compile Include="Assets\Source\RoomOptions.cs" />
      <Compile Include="Assets\Source\PlayExceptionCode.cs" />
+     <Compile Include="Assets\Source\Cushion.cs" />
      <Compile Include="Assets\Source\PlayException.cs" />
      <Compile Include="Assets\Source\PlayArray.cs" />
      <Compile Include="Assets\Source\PlayerCharacter.cs" />
@@ -78,7 +79,8 @@
      <Compile Include="Assets\Source\Utils.cs" />
      <Compile Include="Assets\Source\internal\CommandWrapper.cs" />
      <Compile Include="Assets\Source\internal\LobbyService.cs" />
-     <Compile Include="Assets\Source\EventDefine.cs" />
+     <Compile Include="Assets\Source\EventType.cs" />
+     <Compile Include="Assets\Source\Seat.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.36f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

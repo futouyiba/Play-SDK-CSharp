@@ -2,19 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8fed5ab-f013-4127-8ffd-1ea61b98e995" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Source/EventDefine.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Source/EventDefine.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Source/Cushion.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Source/Seat.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Source/Seat.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Newtonsoft.Json.dll.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Newtonsoft.Json.dll.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Source/LeanCloud.Play.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/LeanCloud.Play.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Cushion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Cushion.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/Cushion.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/QuickStart.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/QuickStart.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Source/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/Client.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Source/EventDefine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/EventType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Source/EventDefine.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/EventType.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Source/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/Player.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LeanCloud.Play.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/LeanCloud.Play.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Play-SDK-CSharp.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Play-SDK-CSharp.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Tests.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
       <updated>1657111348291</updated>
       <workItem from="1657111363429" duration="422000" />
       <workItem from="1657111850839" duration="622000" />
-      <workItem from="1660285701250" duration="7652000" />
+      <workItem from="1660285701250" duration="15168000" />
     </task>
     <servers />
   </component>
