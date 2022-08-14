@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8fed5ab-f013-4127-8ffd-1ea61b98e995" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" afterDir="false" />
     </list>
@@ -81,7 +80,7 @@
       <workItem from="1657111850839" duration="622000" />
       <workItem from="1660285701250" duration="32145000" />
       <workItem from="1660405820753" duration="1460000" />
-      <workItem from="1660458645880" duration="6204000" />
+      <workItem from="1660458645880" duration="6370000" />
     </task>
     <task id="LOCAL-00001" summary="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic.">
       <created>1660360901610</created>

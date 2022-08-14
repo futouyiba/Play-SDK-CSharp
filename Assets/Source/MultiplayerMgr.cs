@@ -143,7 +143,7 @@ namespace LeanCloud.Play
                         {
                             var alreadyHasPlayerOnCusion = client.Room.PlayerList.Exists(playerData =>
                             {
-                                if (playerData.CustomProperties.TryGetInt(CUSHION_ID, out int oldSeatId)))
+                                if (playerData.CustomProperties.TryGetInt(CUSHION_ID, out int oldSeatId))
                                 {
                                     if (oldSeatId == seatId)
                                     {
