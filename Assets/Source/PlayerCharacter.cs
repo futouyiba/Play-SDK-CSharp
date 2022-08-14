@@ -9,6 +9,26 @@ namespace LeanCloud.Play
 {
     public class PlayerCharacter:MonoBehaviour
     {
+        private void Update()
+        {
+            if (!Input.GetMouseButtonDown(0))
+            {
+                return;
+            }
+            if (!this.PlayerModel.IsLocal)
+            {
+                return;
+            }
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            int layerMask = 1 << LayerMask.NameToLayer("Water");
+            if (Physics.Raycast(ray, out hit, 1000f, layerMask))
+            {
+                var destination = hit.point;
+                SendMoveFromClick(destination+Vector3.up);
+            }
+        }
+
         public int cachedActorId;
         
         public int ComputedActorId => MultiplayerMgr.Instance.PlayerCharacters.ContainsValue(this)
@@ -19,18 +39,19 @@ namespace LeanCloud.Play
         
         public void SendMoveFromClick(Vector3 destination)
         {
-            var actorId = MultiplayerMgr.Instance.client.Player.ActorId;
+            if (!this.PlayerModel.IsLocal)
+            {
+                return;
+            }
             var position = destination; //todo this should be fucking removed.
             var eventData = new PlayObject()
             {
-                {"actorId", actorId},
-                {MultiplayerMgr.POSITION, "Hello World"},
                 {"x", position.x},
                 {"y", position.y},
                 {"z", position.z}
             };
                     
-            MultiplayerMgr.Instance.BroadcastEvent(EventType.EVENT_APPLY_FOR_MOVE, eventData).Start();
+            this.PlayerModel.SetCustomProperties(eventData);
         }
         
         public void ReceiveMoveTo(Vector3 destination)

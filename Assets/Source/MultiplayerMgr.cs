@@ -11,33 +11,23 @@ namespace LeanCloud.Play
     public class MultiplayerMgr : MonoBehaviour
     {
         public GameObject CharacterPrefab;
-        
+
         public const string PREFAB_ID = "prefabId";
         public const string SEAT_OWNER_DATA = "SeatData";
         public const string POSITION = "position";
         public const string SEAT_ID = "seatId";
         public const string CUSHION_ID = "cushionId";
-        public const string ACTOR_ID = "actorId"; // actorId is the player's id in the game, from what we see now it's got no use.
+
+        public const string
+            ACTOR_ID = "actorId"; // actorId is the player's id in the game, from what we see now it's got no use.
+
         public const string APPLIER = "applier";
 
         public static MultiplayerMgr Instance { get; private set; }
         public Client client;
         public string _roomName = "xiugou";
-        
+
         public Dictionary<int, PlayerCharacter> PlayerCharacters = new Dictionary<int, PlayerCharacter>();
-
-        private Vector3 Click_Ray() 
-        {
-            Ray ray = this.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.transform != null)
-                    return hit.point;
-            }
-            return transform.position;
-        }
 
         private async void Start()
         {
@@ -57,7 +47,7 @@ namespace LeanCloud.Play
                     Debug.LogFormat("[ERROR] {0}", log);
                 }
             };
-            
+
             // App Id
             var APP_ID = "g2b0X6OmlNy7e4QqVERbgRJR-gzGzoHsz";
             // App Key
@@ -65,13 +55,13 @@ namespace LeanCloud.Play
             // 域名
             var playServer = "https://g2b0x6om.lc-cn-n1-shared.com";
 
-            var userId = System.Environment.MachineName+Random.Range(0, 100);
+            var userId = System.Environment.MachineName + Random.Range(0, 100);
             client = new Client(APP_ID, APP_KEY, userId, playServer: playServer);
             await client.Connect();
             Debug.Log("connected to lean play");
             await client.JoinOrCreateRoom(_roomName);
             Debug.Log("joined room");
-            
+
             client.OnPlayerRoomJoined += OnPlayerRoomJoined;
             client.OnPlayerCustomPropertiesChanged += OnPlayerCustomPropertiesChanged;
             client.OnCustomEvent += OnCustomEvent;
@@ -84,10 +74,9 @@ namespace LeanCloud.Play
             {
                 return;
             }
-            
+
             OnPlayerRoomJoined(client.Player);
             client.Room.CustomProperties.Add(SEAT_OWNER_DATA, new PlayObject());
-            
         }
 
         private void OnRoomCustomPropertiesChanged(PlayObject obj)
@@ -98,13 +87,12 @@ namespace LeanCloud.Play
                 switch (kvPair.Key)
                 {
                     case SEAT_OWNER_DATA:
-                        
+
                         break;
                 }
             }
         }
-        
-        
+
 
         private void OnMasterSwitched(Player obj)
         {
@@ -135,9 +123,11 @@ namespace LeanCloud.Play
                     {
                         return;
                     }
+
                     var seatId = eventData.GetInt(SEAT_ID);
                     var cushionId = eventData.GetInt(CUSHION_ID);
-                    if( client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).TryGetInt(seatId , out  int seatOwnerId))
+                    if (client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA)
+                        .TryGetInt(seatId, out int seatOwnerId))
                     {
                         if (seatOwnerId == senderId)
                         {
@@ -152,21 +142,25 @@ namespace LeanCloud.Play
 
                     break;
                 case EventType.EVENT_APPROVE_REQUEST_OWNER:
-                    
+
                     break;
-                
+
                 case EventType.EVENT_APPROVE_CUSHION_RESULT:
                     if (!client.Player.IsMaster)
                     {
                         return;
                     }
-                    if (senderId == client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).GetInt(eventData.GetInt(SEAT_ID)))
+
+                    if (senderId == client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA)
+                            .GetInt(eventData.GetInt(SEAT_ID)))
                     {
-                        PlayerCharacters[eventData.GetInt(APPLIER)].GoCushionApproved( eventData.GetInt(SEAT_ID), eventData.GetInt(CUSHION_ID));
+                        PlayerCharacters[eventData.GetInt(APPLIER)].GoCushionApproved(eventData.GetInt(SEAT_ID),
+                            eventData.GetInt(CUSHION_ID));
                     }
+
                     break;
                 case EventType.EVENT_CONFIRMED_ENTER_CUSHION:
-                    
+
                     break;
             }
         }
@@ -176,8 +170,11 @@ namespace LeanCloud.Play
         {
             if (changedProps.ContainsKey(PREFAB_ID))
             {
-                var newCharGo = GameObject.Instantiate(CharacterPrefab, new Vector3(player.CustomProperties.GetFloat("x"),
-                    player.CustomProperties.GetFloat("y"), player.CustomProperties.GetFloat("z")), Quaternion.identity);
+                // basically this should not happen.
+                if (PlayerCharacters.ContainsKey(player.ActorId)) return;
+                var newCharGo = GameObject.Instantiate(CharacterPrefab, new Vector3(
+                    changedProps.GetFloat("x"),
+                    changedProps.GetFloat("y"), changedProps.GetFloat("z")), Quaternion.identity);
                 var playerCharacter = newCharGo.AddComponent<PlayerCharacter>();
                 playerCharacter.cachedActorId = player.ActorId;
                 PlayerCharacters.Add(player.ActorId, playerCharacter);
@@ -186,35 +183,37 @@ namespace LeanCloud.Play
                 {
                     newCharGo.GetComponent<MeshRenderer>().material.color = Color.yellow;
                 }
+
                 return;
             }
-            
-            // basically this should not happen.
             if (!PlayerCharacters.ContainsKey(player.ActorId)) return;
-            
+
             if (changedProps.ContainsKey("x") || changedProps.ContainsKey("y") || changedProps.ContainsKey("z"))
             {
                 // ReSharper disable once Unity.NoNullPropagation
                 player.PlayerCharacter?.ReceiveMoveTo(new Vector3(player.CustomProperties.GetFloat("x"),
                     player.CustomProperties.GetFloat("y"), player.CustomProperties.GetFloat("z")));
             }
-            
+
             if (player.IsLocal)
             {
                 Debug.Log("above player is local");
             }
         }
-        
+
         public async Task BroadcastEvent(byte eventId, PlayObject eventData)
         {
             var options = new SendEventOptions()
             {
                 ReceiverGroup = ReceiverGroup.All
             };
-            try {
+            try
+            {
                 // 发送自定义事件
                 await client.SendEvent(eventId, eventData, options);
-            } catch (PlayException e) {
+            }
+            catch (PlayException e)
+            {
                 // 发送事件错误
                 Debug.LogErrorFormat("{0}, {1}", e.Code, e.Detail);
             }
@@ -222,7 +221,7 @@ namespace LeanCloud.Play
 
         private void OnPlayerRoomJoined(Player newPlayer)
         {
-            Debug.Log($"new player: { newPlayer.UserId }");
+            Debug.Log($"new player: {newPlayer.UserId}");
 
             if (!client.Player.IsMaster) return;
             var props = new PlayObject();
@@ -235,11 +234,11 @@ namespace LeanCloud.Play
             {
                 props.Add(PREFAB_ID, Random.Range(2, 3));
             }
-            props.Add("x", Random.Range(-10, 10));
+
+            props.Add("x", Random.Range(-3f, 3f));
             props.Add("y", 1);
-            props.Add("z", Random.Range(-10, 10));
+            props.Add("z", Random.Range(-3f, 3f));
             newPlayer.SetCustomProperties(props);
-            
         }
 
         private async Task OnApplicationQuit()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Seat
   - Cushion
+  - Ground
   layers:
   - Default
   - TransparentFX
