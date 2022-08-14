@@ -47,6 +47,7 @@ namespace LeanCloud.Play
             var cushion = cushionCollider.GetComponent<Cushion>();
             if (cushion == null) return;
             
+            cushion.transform.GetChild(0).gameObject.SetActive(true);
             
             var button = cushionCollider.GetComponentInChildren<Button>();
             if (button != null)
@@ -68,10 +69,20 @@ namespace LeanCloud.Play
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider cushionCollider)
         {
-            var button = other.GetComponentInChildren<Button>();
+            if (!PlayerModel.IsLocal) return;
             
+            var cushion = cushionCollider.GetComponent<Cushion>();
+            if (cushion == null) return;
+            var button = cushionCollider.GetComponentInChildren<Button>();
+            if (button != null)
+            {
+                button.onClick.RemoveAllListeners();
+            }                
+            cushion.transform.GetChild(0).gameObject.SetActive(false);
+            
+        
         }
 
         public void GoCushionApproved(int seatId, int cushionId)

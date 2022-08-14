@@ -17,7 +17,7 @@ namespace LeanCloud.Play
         public const string POSITION = "position";
         public const string SEAT_ID = "seatId";
         public const string CUSHION_ID = "cushionId";
-        public const string ACTOR_ID = "actorId";
+        public const string ACTOR_ID = "actorId"; // actorId is the player's id in the game, from what we see now it's got no use.
         public const string APPLIER = "applier";
 
         public static MultiplayerMgr Instance { get; private set; }
@@ -25,6 +25,19 @@ namespace LeanCloud.Play
         public string _roomName = "xiugou";
         
         public Dictionary<int, PlayerCharacter> PlayerCharacters = new Dictionary<int, PlayerCharacter>();
+
+        private Vector3 Click_Ray() 
+        {
+            Ray ray = this.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.transform != null)
+                    return hit.point;
+            }
+            return transform.position;
+        }
 
         private async void Start()
         {
@@ -52,7 +65,7 @@ namespace LeanCloud.Play
             // 域名
             var playServer = "https://g2b0x6om.lc-cn-n1-shared.com";
 
-            var userId = System.Environment.MachineName;
+            var userId = System.Environment.MachineName+Random.Range(0, 100);
             client = new Client(APP_ID, APP_KEY, userId, playServer: playServer);
             await client.Connect();
             Debug.Log("connected to lean play");
@@ -169,6 +182,10 @@ namespace LeanCloud.Play
                 playerCharacter.cachedActorId = player.ActorId;
                 PlayerCharacters.Add(player.ActorId, playerCharacter);
                 newCharGo.GetComponentInChildren<TextMeshPro>().text = player.UserId;
+                if (player.IsLocal)
+                {
+                    newCharGo.GetComponent<MeshRenderer>().material.color = Color.yellow;
+                }
                 return;
             }
             
@@ -216,7 +233,7 @@ namespace LeanCloud.Play
             }
             else
             {
-                props.Add(PREFAB_ID, Random.Range(0, 3));
+                props.Add(PREFAB_ID, Random.Range(2, 3));
             }
             props.Add("x", Random.Range(-10, 10));
             props.Add("y", 1);

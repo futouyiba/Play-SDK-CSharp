@@ -3,7 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="b8fed5ab-f013-4127-8ffd-1ea61b98e995" name="Changes" comment="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic.">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/_PlayAsm.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/_PlayAsm.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Cushion.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Cushion.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Source/LeanCloud.Play.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/LeanCloud.Play.asmdef" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LeanCloud.Play.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/LeanCloud.Play.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Play-SDK-CSharp.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Play-SDK-CSharp.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,18 +26,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Discover.Launch.Via.Unity": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "nodejs_package_manager_path": "npm",
-    "rider.run.widget.enabled.cache": "false",
-    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.run.widget.enabled.cache&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2020.3.36f1c1\Editor\Unity.exe" />
@@ -71,6 +79,7 @@
       <workItem from="1657111363429" duration="422000" />
       <workItem from="1657111850839" duration="622000" />
       <workItem from="1660285701250" duration="32145000" />
+      <workItem from="1660405820753" duration="1460000" />
     </task>
     <task id="LOCAL-00001" summary="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic.">
       <created>1660360901610</created>
