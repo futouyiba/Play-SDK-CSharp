@@ -13,6 +13,10 @@ namespace LeanCloud.Play
         public GameObject CharacterPrefab;
 
         public const string PREFAB_ID = "prefabId";
+        
+        /// <summary>
+        /// the index for "who owns which seat, aka which sofa".
+        /// </summary>
         public const string SEAT_OWNER_DATA = "SeatData";
         public const string POSITION = "position";
         public const string SEAT_ID = "seatId";
@@ -25,6 +29,10 @@ namespace LeanCloud.Play
 
         public static MultiplayerMgr Instance { get; private set; }
         public Client client;
+        
+        /// <summary>
+        /// for 0814 we test it only in a single room for "xiugou"
+        /// </summary>
         public string _roomName = "xiugou";
 
         public Dictionary<int, PlayerCharacter> PlayerCharacters = new Dictionary<int, PlayerCharacter>();
@@ -79,16 +87,18 @@ namespace LeanCloud.Play
             client.Room.CustomProperties.Add(SEAT_OWNER_DATA, new PlayObject());
         }
 
-        private void OnRoomCustomPropertiesChanged(PlayObject obj)
+        private void OnRoomCustomPropertiesChanged(PlayObject changedProps)
         {
-            foreach (var kvPair in obj)
+            if (changedProps.ContainsKey(SEAT_OWNER_DATA))
             {
-                Debug.Log("room property changed: " + kvPair.Key + " " + kvPair.Value);
-                switch (kvPair.Key)
+                var seatOwnerData = changedProps.GetPlayObject(SEAT_OWNER_DATA);
+                foreach (var kvPair in seatOwnerData)
                 {
-                    case SEAT_OWNER_DATA:
-
-                        break;
+                    var seatId = (int)kvPair.Key;
+                    var seatOwnerId = (int)kvPair.Value;
+                    // deal with the circumstance that former seat owner get outside the seat.
+                    var formerOwnerId = client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).GetInt(seatId);
+                    
                 }
             }
         }
@@ -114,10 +124,10 @@ namespace LeanCloud.Play
             Debug.LogFormat("custom event {0} from {1}", eventType, senderId);
             switch (eventType)
             {
-                case EventType.EVENT_APPLY_FOR_MOVE:
-                    PlayerCharacters[senderId].ReceiveMoveTo(new Vector3(eventData.GetFloat("x"),
-                        eventData.GetFloat("y"), eventData.GetFloat("z")));
-                    break;
+                // case EventType.EVENT_APPLY_FOR_MOVE:
+                //     PlayerCharacters[senderId].ReceiveMoveTo(new Vector3(eventData.GetFloat("x"),
+                //         eventData.GetFloat("y"), eventData.GetFloat("z")));
+                //     break;
                 case EventType.EVENT_APPLY_CUSHION:
                     if (!client.Player.IsMaster)
                     {
@@ -131,8 +141,24 @@ namespace LeanCloud.Play
                     {
                         if (seatOwnerId == senderId)
                         {
-                            // client.Room.CustomProperties.GetPlayObject(SEAT_OWNER_DATA).SetInt(seatId, -1);
-                            // client.Room.set
+                            var alreadyHasPlayerOnCusion = client.Room.PlayerList.Exists(playerData =>
+                            {
+                                if (playerData.CustomProperties.TryGetInt(CUSHION_ID, out int oldSeatId)))
+                                {
+                                    if (oldSeatId == seatId)
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                }
+                                else
+                                {
+                                        return false;      
+                                }
+                            });
                         }
                     }
                     else
@@ -195,6 +221,8 @@ namespace LeanCloud.Play
                     player.CustomProperties.GetFloat("y"), player.CustomProperties.GetFloat("z")));
             }
 
+
+
             if (player.IsLocal)
             {
                 Debug.Log("above player is local");
@@ -224,7 +252,11 @@ namespace LeanCloud.Play
             Debug.Log($"new player: {newPlayer.UserId}");
 
             if (!client.Player.IsMaster) return;
-            var props = new PlayObject();
+            var props = new PlayObject()
+            {
+                {SEAT_ID, -1},
+                {CUSHION_ID, -1}
+            };
 
             if (newPlayer.IsMaster)
             {

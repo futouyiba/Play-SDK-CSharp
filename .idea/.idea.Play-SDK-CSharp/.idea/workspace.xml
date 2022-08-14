@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8fed5ab-f013-4127-8ffd-1ea61b98e995" name="Changes" comment="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic.">
+    <list default="true" id="b8fed5ab-f013-4127-8ffd-1ea61b98e995" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Play-SDK-CSharp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Seat.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Seat.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/WhiteBox.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/WhiteBox.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/WhiteBox/NavMesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/WhiteBox/NavMesh.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/MultiplayerMgr.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Play-SDK-CSharp.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Play-SDK-CSharp.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +81,7 @@
       <workItem from="1657111850839" duration="622000" />
       <workItem from="1660285701250" duration="32145000" />
       <workItem from="1660405820753" duration="1460000" />
-      <workItem from="1660458645880" duration="2891000" />
+      <workItem from="1660458645880" duration="6204000" />
     </task>
     <task id="LOCAL-00001" summary="finished move scripts. next: 1. add move related components on gameobject. 2. finish cushion &amp; seat logic.">
       <created>1660360901610</created>
@@ -137,19 +130,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs</url>
-          <line>58</line>
-          <properties documentPath="D:\Documents\GitHub\Play-SDK-CSharp\Assets\Source\PlayerCharacter.cs" initialLine="56" containingFunctionPresentation="method 'ReceiveMoveTo'">
-            <startOffsets>
-              <option value="1772" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1820" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Source/PlayerCharacter.cs</url>
           <line>21</line>
